@@ -1,0 +1,171 @@
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box }
+html, body {
+  height:100%; overflow:hidden;
+  background:#000;
+  font-family:'Orbitron',sans-serif;
+  filter:contrast(200%);
+  position:relative;
+}
+
+/* ФОНОВЫЙ ШУМ */
+body::before {
+  content:''; position:absolute;
+  top:0; left:0; width:100%; height:100%;
+  background:
+    url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSIzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjEuNSIgY3k9IjEuNSIgcj0iMS41IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjMiLz48L3N2Zz4=')
+    repeat;
+  animation: noise 0.2s steps(2) infinite;
+  z-index:1; pointer-events:none;
+}
+
+/* КОНТЕЙНЕР */
+.container {
+  position:relative; z-index:2;
+  padding:40px; text-align:center;
+  color:#fff; background:rgba(0,0,0,0.6);
+  overflow:hidden;
+}
+
+/* ЗАГОЛОВОК */
+.title {
+  font-size:5rem; position:relative; line-height:1;
+}
+.title::before,
+.title::after {
+  content:attr(data-text);
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+}
+.title::before { left:3px; text-shadow:-2px 0 #fff; }
+.title::after  { left:-3px; text-shadow:2px 0 #fff; }
+.title.glitch-active::before {
+  animation: glitchText1 0.2s steps(2) both;
+}
+.title.glitch-active::after {
+  animation: glitchText2 0.2s steps(2) both;
+}
+
+/* ФРАЗА */
+.subtitle {
+  margin-top:1rem; font-size:1.6rem; position:relative;
+}
+.subtitle::before,
+.subtitle::after {
+  content:attr(data-text);
+  position:absolute; top:0; left:0;
+  width:100%; height:100%; opacity:0.6;
+}
+.subtitle::before { left:2px; }
+.subtitle::after  { left:-2px; }
+.subtitle.glitch-active::before {
+  animation: glitchText1 0.2s steps(2) both;
+}
+.subtitle.glitch-active::after {
+  animation: glitchText2 0.2s steps(2) both;
+}
+
+/* ПРОКАЧАННЫЙ ЛОУДЕР */
+.loader {
+  position:relative; width:200px; height:200px;
+  margin:2rem auto;
+}
+.loader .rings {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+}
+.loader .ring {
+  position:absolute; border:3px solid #fff; border-radius:50%;
+}
+.loader .ring-1 {
+  width:100%; height:100%;
+  animation: ringRotate1 4s linear infinite;
+}
+.loader .ring-2 {
+  width:80%; height:80%;
+  top:10%; left:10%;
+  animation: ringRotate2 2s linear infinite reverse;
+}
+.loader .bars {
+  position:absolute; bottom:10%; left:50%;
+  width:90%; height:20px;
+  transform:translateX(-50%);
+  display:flex; justify-content:space-between;
+}
+.loader .bar {
+  flex:1; margin:0 1px;
+  background:#fff; opacity:0.05;
+  animation: barsPulse 1.5s ease-in-out infinite;
+}
+.loader .bar:nth-child(even) {
+  animation-duration:1.2s; animation-delay:0.2s;
+}
+.loader .bar:nth-child(3n) {
+  animation-duration:1s; animation-delay:0.4s;
+}
+.loader.glitch-active .ring,
+.loader.glitch-active .bar {
+  animation: glitchSpinner 0.3s steps(1) both !important;
+}
+
+/* СОЦСЕТИ */
+.socials {
+  margin-top:2rem; display:flex;
+  justify-content:center; gap:2rem;
+}
+.social-link { position:relative; }
+.social-icon { font-size:48px; color:#fff; }
+.social-link.glitch-active .social-icon {
+  animation: glitchIconShort 0.3s steps(2) both;
+}
+
+/* KEYFRAMES */
+@keyframes noise {
+  0%,100%{opacity:0.2}50%{opacity:0.05}
+}
+@keyframes glitchText1 {
+  0%   { clip:rect(0,900px,40px,0); transform:translate(0) }
+  33%  { clip:rect(30px,900px,70px,0); transform:translate(-3px,2px) }
+  66%  { clip:rect(10px,900px,50px,0); transform:translate(3px,-2px) }
+  100% { clip:rect(0,900px,40px,0); transform:translate(0) }
+}
+@keyframes glitchText2 {
+  0%   { clip:rect(60px,900px,100px,0); transform:translate(0) }
+  33%  { clip:rect(90px,900px,130px,0); transform:translate(2px,-3px) }
+  66%  { clip:rect(40px,900px,80px,0); transform:translate(-2px,3px) }
+  100% { clip:rect(60px,900px,100px,0); transform:translate(0) }
+}
+@keyframes ringRotate1 { to { transform:translate(-50%,-50%) rotate(360deg); } }
+@keyframes ringRotate2 { to { transform:translate(-50%,-50%) rotate(360deg); } }
+@keyframes barsPulse {
+  0%,100% { opacity:0.05; transform:scaleY(1); }
+  50%     { opacity:1;   transform:scaleY(0.3); }
+}
+@keyframes glitchSpinner {
+  0%   { transform:translate(0) }
+  25%  { transform:translate(5px,-5px) rotate(5deg) }
+  50%  { transform:translate(-5px,5px) rotate(-5deg) }
+  75%  { transform:translate(5px,5px) rotate(10deg) }
+  100% { transform:translate(0) }
+}
+@keyframes glitchIconShort {
+  0%,100% { transform:translate(0); opacity:1 }
+  33%     { transform:translate(-3px,3px); opacity:0.6 }
+  66%     { transform:translate(3px,-3px); opacity:0.4 }
+}
+
+/* АДАПТИВ */
+@media (max-width: 768px) {
+  .title { font-size:3rem }
+  .subtitle { font-size:1.2rem }
+  .loader { width:150px; height:150px }
+  .loader .bar { margin:0 0.5px }
+  .social-icon { font-size:36px }
+}
+@media (max-width: 480px) {
+  .title { font-size:2rem }
+  .subtitle { font-size:1rem }
+  .loader { width:120px; height:120px }
+  .loader .bar { height:15px }
+  .social-icon { font-size:28px }
+}
